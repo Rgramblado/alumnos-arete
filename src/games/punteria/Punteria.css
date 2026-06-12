@@ -1,0 +1,92 @@
+.aim {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: min(92vw, 640px);
+}
+
+.aim__hud {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 0.7rem;
+}
+.aim__hud-item {
+  background: var(--frame);
+  border: 2px solid var(--ink);
+  padding: 8px 10px;
+  box-shadow: 3px 3px 0 #000;
+}
+
+.aim__stage {
+  position: relative;
+  width: 100%;
+  height: min(64vh, 460px);
+  background: #05010f;
+  border: 4px solid var(--frame);
+  box-shadow: inset 0 0 40px rgba(255, 59, 107, 0.08), 6px 6px 0 #000;
+  overflow: hidden;
+  touch-action: manipulation;
+}
+.aim__stage--hit { box-shadow: inset 0 0 60px rgba(61, 220, 132, 0.4), 6px 6px 0 #000; }
+.aim__stage--bomb { box-shadow: inset 0 0 60px rgba(255, 59, 107, 0.55), 6px 6px 0 #000; }
+
+.aim__blanco {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  background: none;
+  border: none;
+  padding: 0;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+  animation: aim-vida linear forwards;
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.25));
+  user-select: none;
+}
+.aim__blanco:active { transform: translate(-50%, -50%) scale(0.85); }
+
+@keyframes aim-vida {
+  0% { transform: translate(-50%, -50%) scale(0.4); opacity: 0; }
+  12% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  80% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(0.7); opacity: 0.2; }
+}
+
+.aim__overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  text-align: center;
+  background: rgba(5, 1, 15, 0.85);
+  padding: 20px;
+}
+
+.aim__big {
+  font-size: 1.4rem;
+  color: var(--neon);
+  text-shadow: 3px 3px 0 #000;
+}
+.aim__rule {
+  font-size: 0.6rem;
+  color: var(--ink-dim);
+  line-height: 1.8;
+}
+
+.aim__stats {
+  display: grid;
+  gap: 8px;
+  font-size: 0.6rem;
+  color: var(--ink-dim);
+  line-height: 1.6;
+}
+.aim__stats b { color: var(--ink); margin-left: 6px; }
+
+@media (max-width: 420px) {
+  .aim__big { font-size: 1.1rem; }
+  .aim__hud { font-size: 0.55rem; }
+}

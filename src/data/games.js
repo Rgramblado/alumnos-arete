@@ -3,7 +3,7 @@
 // En cada sprint, al terminar un juego, se pone `disponible: true`.
 
 export const JUEGOS = [
-  { slug: 'punteria',   nombre: 'PUNTERÍA',    icono: '🎯', color: '#ff3b6b', disponible: false },
+  { slug: 'punteria',   nombre: 'PUNTERÍA',    icono: '🎯', color: '#ff3b6b', disponible: true },
   { slug: 'buscaminas', nombre: 'BUSCAMINAS',  icono: '💣', color: '#4f9bff', disponible: false },
   { slug: 'flappy',     nombre: 'FLAPPY',      icono: '🐤', color: '#ffd23f', disponible: false },
   { slug: 'dino',       nombre: 'DINO',        icono: '🦕', color: '#3ddc84', disponible: false },
