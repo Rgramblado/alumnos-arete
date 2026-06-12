@@ -252,6 +252,9 @@ export default function Buscaminas() {
         >
           {modoBandera ? '🚩 BANDERA' : '⛏ CAVAR'}
         </button>
+        <button className="px-btn" onClick={reset}>
+          🔄 REINICIAR
+        </button>
         <button className="px-btn" onClick={volverConfig}>
           DIFICULTAD
         </button>
