@@ -1,0 +1,108 @@
+.mina {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+}
+
+.mina--config {
+  gap: 18px;
+}
+.mina__titulo {
+  font-size: 1.3rem;
+  color: var(--neon-2);
+  text-shadow: 3px 3px 0 #000;
+}
+.mina__sub {
+  font-size: 0.6rem;
+  color: var(--ink-dim);
+}
+.mina__dificultades {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: min(80vw, 280px);
+}
+.mina__dificultades .px-btn {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 0.8rem;
+}
+.mina__dificultad-info {
+  font-size: 0.5rem;
+  color: var(--ink-dim);
+}
+
+.mina__hud {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: min(92vw, 360px);
+  background: var(--frame);
+  border: 3px solid var(--ink);
+  box-shadow: 4px 4px 0 #000;
+  padding: 10px 14px;
+}
+.mina__contador {
+  font-size: 0.75rem;
+  color: var(--neon-3);
+}
+.mina__cara {
+  font-size: 1.4rem;
+  background: none;
+  border: none;
+  line-height: 1;
+}
+
+.mina__tablero {
+  display: grid;
+  gap: 2px;
+  width: 100%;
+  padding: 6px;
+  background: #05010f;
+  border: 4px solid var(--frame);
+  box-shadow: 6px 6px 0 #000;
+}
+
+.mina__celda {
+  aspect-ratio: 1;
+  min-width: 0;
+  display: grid;
+  place-items: center;
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(0.45rem, 2.4vw, 0.9rem);
+  background: var(--frame);
+  border: 2px solid;
+  border-color: #4a2a7a #1a0838 #1a0838 #4a2a7a;
+  color: var(--ink);
+  padding: 0;
+  cursor: pointer;
+}
+.mina__celda:active { border-color: #1a0838 #4a2a7a #4a2a7a #1a0838; }
+
+.mina__celda--abierta {
+  background: #160a2e;
+  border: 1px solid #0a0118;
+  cursor: default;
+}
+.mina__celda--boom {
+  background: var(--neon);
+}
+
+.mina__controles {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.mina__controles .px-btn { font-size: 0.6rem; }
+
+.mina__mensaje {
+  font-size: 0.9rem;
+  text-shadow: 2px 2px 0 #000;
+}
+.mina__mensaje--ok { color: var(--neon-3); }
+.mina__mensaje--ko { color: var(--neon); }

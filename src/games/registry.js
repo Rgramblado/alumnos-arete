@@ -6,4 +6,5 @@ import { lazy } from 'react'
 
 export const COMPONENTES = {
   punteria: lazy(() => import('./punteria/Punteria.jsx')),
+  buscaminas: lazy(() => import('./buscaminas/Buscaminas.jsx')),
 }
