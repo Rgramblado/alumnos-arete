@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useCallback } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './Punteria.css'
 
 const DURACION = 30000 // 30 segundos
@@ -7,7 +7,7 @@ const PROB_BOMBA = 0.16
 const VALOR_ACIERTO = 10
 const PENA_BOMBA = 15
 
-// Dificultad: intervalo de aparición y vida del blanco según progreso (0..1)
+// Dificultad segun progreso (0..1)
 const intervaloSpawn = (p) => 720 - 320 * p // 720ms -> 400ms
 const vidaBlanco = (p) => 1300 - 520 * p // 1300ms -> 780ms
 
@@ -19,19 +19,23 @@ export default function Punteria() {
   const [aciertos, setAciertos] = useState(0)
   const [fallos, setFallos] = useState(0)
   const [bombas, setBombas] = useState(0)
-  const [flash, setFlash] = useState(null) // 'hit' | 'bomb'
+  const [flash, setFlash] = useState(null) // hit | bomb
 
   const finRef = useRef(0)
   const proxSpawnRef = useRef(0)
   const idRef = useRef(0)
   const loopRef = useRef(0)
+  const blancosRef = useRef([]) // fuente autoritativa durante la partida
+  const fallosRef = useRef(0)
 
-  const flashear = useCallback((tipo) => {
+  const flashear = (tipo) => {
     setFlash(tipo)
     setTimeout(() => setFlash(null), 120)
-  }, [])
+  }
 
   const empezar = () => {
+    blancosRef.current = []
+    fallosRef.current = 0
     setBlancos([])
     setPuntos(0)
     setAciertos(0)
@@ -45,7 +49,6 @@ export default function Punteria() {
     setEstado('jugando')
   }
 
-  // Bucle de juego (tick por intervalo, no por frame: basta para spawn/expirar)
   useEffect(() => {
     if (estado !== 'jugando') return
 
@@ -57,37 +60,42 @@ export default function Punteria() {
 
       if (restante <= 0) {
         clearInterval(loopRef.current)
+        blancosRef.current = []
         setBlancos([])
+        setFallos(fallosRef.current)
         setEstado('fin')
         return
       }
 
-      setBlancos((prev) => {
-        let vivos = prev
-        // Expirar
-        const expirados = vivos.filter((b) => ahora > b.nace + b.vida)
-        if (expirados.length) {
-          const fallosNuevos = expirados.filter((b) => b.tipo === 'diana').length
-          if (fallosNuevos) setFallos((f) => f + fallosNuevos)
-          vivos = vivos.filter((b) => ahora <= b.nace + b.vida)
-        }
-        // Spawn
-        if (ahora >= proxSpawnRef.current && vivos.length < MAX_BLANCOS) {
-          const esBomba = Math.random() < PROB_BOMBA
-          const nuevo = {
+      let vivos = blancosRef.current
+
+      // Expirar (las dianas no acertadas cuentan como fallo)
+      const expirados = vivos.filter((b) => ahora > b.nace + b.vida)
+      if (expirados.length) {
+        fallosRef.current += expirados.filter((b) => b.tipo === 'diana').length
+        vivos = vivos.filter((b) => ahora <= b.nace + b.vida)
+      }
+
+      // Spawn
+      if (ahora >= proxSpawnRef.current && vivos.length < MAX_BLANCOS) {
+        const esBomba = Math.random() < PROB_BOMBA
+        vivos = [
+          ...vivos,
+          {
             id: ++idRef.current,
             tipo: esBomba ? 'bomba' : 'diana',
-            x: 6 + Math.random() * 82, // %
-            y: 6 + Math.random() * 80, // %
-            tam: 46 + Math.random() * 26, // px
+            x: 6 + Math.random() * 82,
+            y: 6 + Math.random() * 80,
+            tam: 46 + Math.random() * 26,
             nace: ahora,
             vida: vidaBlanco(p),
-          }
-          vivos = [...vivos, nuevo]
-          proxSpawnRef.current = ahora + intervaloSpawn(p)
-        }
-        return vivos
-      })
+          },
+        ]
+        proxSpawnRef.current = ahora + intervaloSpawn(p)
+      }
+
+      blancosRef.current = vivos
+      setBlancos(vivos)
     }, 90)
 
     return () => clearInterval(loopRef.current)
@@ -95,7 +103,8 @@ export default function Punteria() {
 
   const golpear = (b, e) => {
     e.stopPropagation()
-    setBlancos((prev) => prev.filter((x) => x.id !== b.id))
+    blancosRef.current = blancosRef.current.filter((x) => x.id !== b.id)
+    setBlancos(blancosRef.current)
     if (b.tipo === 'bomba') {
       setPuntos((s) => s - PENA_BOMBA)
       setBombas((n) => n + 1)
@@ -113,9 +122,9 @@ export default function Punteria() {
   return (
     <div className="aim">
       <div className="aim__hud">
-        <span className="aim__hud-item">⏱ {segundos}s</span>
-        <span className="aim__hud-item">⭐ {puntos}</span>
-        <span className="aim__hud-item">🎯 {aciertos}</span>
+        <span className="aim__hud-item">TIEMPO {segundos}</span>
+        <span className="aim__hud-item">PUNTOS {puntos}</span>
+        <span className="aim__hud-item">OK {aciertos}</span>
       </div>
 
       <div className={`aim__stage ${flash ? `aim__stage--${flash}` : ''}`}>
@@ -152,7 +161,7 @@ export default function Punteria() {
 
         {estado === 'fin' && (
           <div className="aim__overlay">
-            <p className="aim__big">¡TIEMPO!</p>
+            <p className="aim__big">TIEMPO!</p>
             <div className="aim__stats">
               <div>PUNTOS <b>{puntos}</b></div>
               <div>ACIERTOS <b>{aciertos}</b></div>
