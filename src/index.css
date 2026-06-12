@@ -1,0 +1,70 @@
+:root {
+  --bg: #0a0118;
+  --bg-2: #15052e;
+  --ink: #f5f0ff;
+  --ink-dim: #9a86c4;
+  --neon: #ff3b6b;
+  --neon-2: #4f9bff;
+  --neon-3: #3ddc84;
+  --frame: #2a1052;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body, #root { height: 100%; }
+
+body {
+  font-family: 'Press Start 2P', monospace;
+  background:
+    radial-gradient(circle at 50% -10%, var(--bg-2), var(--bg) 60%);
+  color: var(--ink);
+  -webkit-font-smoothing: none;
+  image-rendering: pixelated;
+  overflow-x: hidden;
+}
+
+/* Líneas de escaneo CRT sobre todo */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0,
+    rgba(0, 0, 0, 0) 2px,
+    rgba(0, 0, 0, 0.18) 3px,
+    rgba(0, 0, 0, 0) 4px
+  );
+  z-index: 9999;
+  mix-blend-mode: multiply;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+a { color: inherit; }
+
+/* Botón pixel reutilizable */
+.px-btn {
+  display: inline-block;
+  font-size: 0.75rem;
+  padding: 14px 20px;
+  color: var(--ink);
+  background: var(--frame);
+  border: 3px solid var(--ink);
+  box-shadow: 4px 4px 0 #000;
+  text-decoration: none;
+  transition: transform 0.05s, box-shadow 0.05s;
+  text-align: center;
+}
+.px-btn:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 #000; }
+.px-btn:active { transform: translate(4px, 4px); box-shadow: 0 0 0 #000; }
+
+.px-btn--accent { background: var(--neon); border-color: #fff; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; }
+}

@@ -1,0 +1,98 @@
+.ruleta {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  padding: 24px 16px 40px;
+  text-align: center;
+}
+
+.ruleta__logo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  line-height: 1;
+}
+.ruleta__logo-arcade {
+  font-size: 2rem;
+  color: var(--neon);
+  text-shadow: 3px 3px 0 #000, 0 0 18px var(--neon);
+  letter-spacing: 2px;
+}
+.ruleta__logo-arete {
+  font-size: 0.7rem;
+  color: var(--neon-2);
+  text-shadow: 2px 2px 0 #000;
+}
+
+.ruleta__sub {
+  font-size: 0.55rem;
+  color: var(--ink-dim);
+  letter-spacing: 1px;
+}
+
+.ruleta__caja {
+  position: relative;
+  width: min(86vw, 360px);
+  aspect-ratio: 1;
+}
+
+.ruleta__svg {
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  filter: drop-shadow(0 0 16px rgba(255, 59, 107, 0.35));
+}
+
+/* Puntero en la parte superior, apuntando hacia dentro */
+.ruleta__puntero {
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 16px solid transparent;
+  border-right: 16px solid transparent;
+  border-top: 28px solid #fff;
+  z-index: 5;
+  filter: drop-shadow(0 2px 0 #000);
+}
+
+.ruleta__parar {
+  font-size: 1rem;
+  padding: 18px 40px;
+}
+
+.ruleta__panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 22px;
+  border: 3px solid #fff;
+  background: rgba(10, 1, 24, 0.92);
+  box-shadow: 6px 6px 0 #000;
+  animation: pop 0.18s ease-out;
+}
+@keyframes pop {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.ruleta__panel-icono { font-size: 3rem; }
+.ruleta__panel-nombre {
+  font-size: 1rem;
+  text-shadow: 2px 2px 0 #000;
+}
+.ruleta__panel-pronto {
+  font-size: 0.65rem;
+  color: var(--ink-dim);
+}
+.ruleta__otra { font-size: 0.6rem; }
+
+@media (max-width: 420px) {
+  .ruleta__logo-arcade { font-size: 1.5rem; }
+}
