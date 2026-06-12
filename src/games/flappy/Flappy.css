@@ -1,0 +1,79 @@
+.flappy {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.flappy__hud {
+  font-size: 0.7rem;
+}
+.flappy__hud-item {
+  background: var(--frame);
+  border: 2px solid var(--ink);
+  padding: 8px 12px;
+  box-shadow: 3px 3px 0 #000;
+  color: var(--neon-3);
+}
+
+.flappy__marco {
+  position: relative;
+  width: min(92vw, 360px);
+  border: 4px solid var(--frame);
+  box-shadow: 6px 6px 0 #000;
+  line-height: 0;
+  cursor: pointer;
+  touch-action: manipulation;
+  user-select: none;
+}
+
+.flappy__canvas {
+  width: 100%;
+  height: auto;
+  display: block;
+  image-rendering: pixelated;
+}
+
+.flappy__overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  text-align: center;
+  padding: 20px;
+  background: rgba(10, 1, 24, 0.78);
+  line-height: 1.8;
+}
+
+.flappy__big {
+  font-size: 1.6rem;
+  color: var(--neon-3);
+  text-shadow: 3px 3px 0 #000;
+}
+.flappy__big--ko { color: var(--neon); }
+
+.flappy__rule {
+  font-size: 0.55rem;
+  color: var(--ink-dim);
+}
+
+.flappy__tap {
+  font-size: 0.6rem;
+  color: var(--ink);
+  margin-top: 6px;
+  animation: flappy-parpadeo 1s steps(2) infinite;
+}
+@keyframes flappy-parpadeo {
+  50% { opacity: 0.3; }
+}
+
+.flappy__stats {
+  display: grid;
+  gap: 8px;
+  font-size: 0.65rem;
+  color: var(--ink-dim);
+}
+.flappy__stats b { color: var(--ink); margin-left: 6px; }
